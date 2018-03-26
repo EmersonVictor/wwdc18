@@ -1,2 +1,2 @@
-# wwdc18
-WWDC 2018 Playground
+# BeProud
+## WWDC 2018 Playground
