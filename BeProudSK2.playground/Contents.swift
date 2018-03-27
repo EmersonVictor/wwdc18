@@ -1,10 +1,20 @@
 import PlaygroundSupport
 import SpriteKit
 
-public class RedScene: SKScene {
+struct PhysicsCategory {
+    static let None: UInt32 = 0
+    static let Person: UInt32 = 0b1      // Person
+    static let Obstacles: UInt32 = 0b10  // Obstacles
+}
+
+public class RedScene: SKScene, SKPhysicsContactDelegate {
     var personNode = SKShapeNode(circleOfRadius: 45)
     
     override public func didMove(to view: SKView) {
+        // Setting up physics word
+        physicsWorld.gravity = CGVector.zero
+        physicsWorld.contactDelegate = self
+        
         self.createPerson()
         self.createObstacles()
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -20,23 +30,24 @@ public class RedScene: SKScene {
         person.position = CGPoint(x: 50, y: 400)
         person.physicsBody = body
         person.physicsBody?.affectedByGravity = false
+        personNode.physicsBody?.mass = 0
         
         self.addChild(person)
     }
     
     func createObstacles() {
         var obstacles = [
-            CGRect(x: 0, y: 0, width: 6, height: 240), // 1
-            CGRect(x: 0, y: 0, width: 30, height: 6), // 2
+            CGRect(x: 0, y: 0, width: 8, height: 240), // 1
+            CGRect(x: 0, y: 0, width: 30, height: 8), // 2
         ]
         
         var physicsBodies = [
-            CGSize(width: 6, height: 400), // 1
-            CGSize(width: 300, height: 6), // 2
+            CGSize(width: 8, height: 220), // 1
+            CGSize(width: 30, height: 8), // 2
         ]
         
         var positions = [
-            CGPoint(x: 140, y: 500 - 240), // 1
+            CGPoint(x: 140, y: 260), // 1
             CGPoint(x: 110, y: 300), // 2
         ]
         
@@ -50,51 +61,46 @@ public class RedScene: SKScene {
             wall.physicsBody?.affectedByGravity = false
             wall.physicsBody?.pinned = true
             wall.physicsBody?.allowsRotation = false
+            wall.physicsBody?.categoryBitMask = PhysicsCategory.Obstacles
+            wall.physicsBody?.contactTestBitMask = PhysicsCategory.Person
+            wall.physicsBody?.collisionBitMask = PhysicsCategory.Person
             
             self.addChild(wall)
         }
     }
     
-    func touchDown(atPoint pos : CGPoint) {
-        print(self.personNode.position)
+    var isTouching = false
+//    var haveCollision = false
+    var positionOfTouch = CGPoint(x: 0 , y: 0)
+    
+    public func didBegin(_ contact: SKPhysicsContact) {
+        print("have collision")
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-        let personPostion = self.personNode.position
-        
-        if pos.x < 250 {
-            if self.nodes(at: CGPoint(x:personPostion.x - 45.1, y: personPostion.y)).isEmpty {
-                self.personNode.position = CGPoint(x: personPostion.x - 2, y: personPostion.y)
-            }
-        } else if pos.x > 500 {
-            if self.nodes(at: CGPoint(x:personPostion.x + 45.1, y: personPostion.y)).isEmpty {
-                self.personNode.position = CGPoint(x: personPostion.x + 2, y: personPostion.y)
-            }
-        } else if pos.y >= 250 {
-            if self.nodes(at: CGPoint(x:personPostion.x, y: personPostion.y + 45.1)).isEmpty {
-                self.personNode.position = CGPoint(x: personPostion.x, y: personPostion.y + 2)
-            }
-        } else {
-            if self.nodes(at: CGPoint(x:personPostion.x, y: personPostion.y - 45.1)).isEmpty {
-                self.personNode.position = CGPoint(x: personPostion.x, y: personPostion.y - 2)
-            }
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        
-    }
-    
-    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { touchMoved(toPoint: t.location(in: self)) }
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.isTouching = true
+        for t in touches { self.positionOfTouch = t.location(in: self) }
     }
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { touchUp(atPoint: t.location(in: self)) }
+        self.isTouching = false
+//        self.haveCollision = false
     }
     
-    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { touchUp(atPoint: t.location(in: self))}
+    override public func update(_ currentTime: TimeInterval) {
+        if self.isTouching {
+            let pos = self.positionOfTouch
+            
+            if pos.x < 250 {
+                self.personNode.position = CGPoint(x: self.personNode.position.x - 1, y: self.personNode.position.y)
+            } else if pos.x > 500 {
+               self.personNode.position = CGPoint(x: self.personNode.position.x + 1, y: self.personNode.position.y)
+            } else if pos.y >= 250 {
+                self.personNode.position = CGPoint(x: self.personNode.position.x, y: self.personNode.position.y + 1)
+            } else {
+               self.personNode.position = CGPoint(x: self.personNode.position.x, y: self.personNode.position.y - 1)
+            }
+        }
     }
 }
 
