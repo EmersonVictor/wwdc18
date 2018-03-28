@@ -1,9 +1,7 @@
-// Font
-let cfURL = Bundle.main.url(forResource: "BarlowCondensed-Regular", withExtension: "ttf")! as CFURL
-CTFontManagerRegisterFontsForURL(cfURL, CTFontManagerScope.process, nil)
+import UIKit
 
 // Colors
-public struct GrayShades {
+public struct GrayColors {
     let darker = UIColor(red:0.20, green:0.20, blue:0.20, alpha:1.0)
     let dark = UIColor(red:0.32, green:0.32, blue:0.32, alpha:1.0)
     let normal = UIColor(red:0.44, green:0.44, blue:0.44, alpha:1.0)
@@ -19,4 +17,15 @@ public struct RainbowColors {
     let green = UIColor(red:0.47, green:0.84, blue:0.44, alpha:1.0)
     let blue = UIColor(red:0.18, green:0.36, blue:0.99, alpha:1.0)
     let purple = UIColor(red:0.58, green:0.15, blue:0.65, alpha:1.0)
+}
+
+public let grayColors = GrayColors()
+public let rainbowColors = RainbowColors()
+
+// Physics category
+public struct PhysicsCategory {
+    static let None: UInt32 = 0
+    static let Person: UInt32 = 0b1       // Person
+    static let Obstacles: UInt32 = 0b10   // Obstacles
+    static let Acceptance: UInt32 = 0b101 // Acceptance
 }

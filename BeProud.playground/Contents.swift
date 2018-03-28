@@ -22,10 +22,18 @@ public class RedView: UIViewController {
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector (RedView.wasDragged(_:)))
         self.personView.addGestureRecognizer(dragGesture)
         self.personView.isUserInteractionEnabled = true
-        self.personView.backgroundColor = UIColor.white
+        self.personView.backgroundColor = UIColor.black
         self.personView.layer.cornerRadius = 45
         self.personView.clipsToBounds = true
         self.view.addSubview(self.personView)
+        
+        let circ = UIView(frame: CGRect(x: 7.5, y: 7.5, width: 75, height: 75))
+        circ.layer.borderWidth = 1
+        circ.layer.borderColor = UIColor.red.cgColor
+        circ.layer.cornerRadius = 75 / 2
+        self.personView.addSubview(circ)
+    
+        
     }
     
     func setupAcceptance() {

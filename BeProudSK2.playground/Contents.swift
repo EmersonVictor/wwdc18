@@ -1,18 +1,14 @@
 import PlaygroundSupport
 import SpriteKit
+import UIKit
 
-struct PhysicsCategory {
-    static let None: UInt32 = 0
-    static let Person: UInt32 = 0b1       // Person
-    static let Obstacles: UInt32 = 0b10   // Obstacles
-    static let Acceptance: UInt32 = 0b101 // Acceptance
-}
+// Font
+let cfURL = Bundle.main.url(forResource: "BarlowCondensed-Regular", withExtension: "ttf")! as CFURL
+CTFontManagerRegisterFontsForURL(cfURL, CTFontManagerScope.process, nil)
 
+// View setup
+let introView = IntroView()
+introView.preferredContentSize = CGSize(width: 750, height: 540)
+PlaygroundSupport.PlaygroundPage.current.liveView = introView
 
-let sceneView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
-let startScene = RedScene(size: CGSize(width: 750, height: 540))
-startScene.backgroundColor = UIColor.gray
-startScene.scaleMode = .aspectFill
-sceneView.presentScene(startScene)
-PlaygroundSupport.PlaygroundPage.current.liveView = sceneView
 
