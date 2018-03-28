@@ -66,17 +66,15 @@ public class RedScene: ObstaclesScene {
         if contact.bodyA.categoryBitMask == PhysicsCategory.Acceptance ||
             contact.bodyB.categoryBitMask == PhysicsCategory.Acceptance {
             
-            let acceptYourself = SKAction.fadeOut(withDuration: 1)
-            self.acceptanceNode.run(acceptYourself)
-            
-            // Next view
-            let orangeView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
-            let orangeScene = OrangeScene(size: CGSize(width: 750, height: 540))
-            
-            orangeView.presentScene(orangeScene)
-            PlaygroundPage.current.liveView = orangeView
+            let acceptYourself = SKAction.fadeOut(withDuration: 0.5)
+            self.acceptanceNode.run(acceptYourself, completion: {() -> Void in
+                // Next view
+                let orangeView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
+                let orangeScene = OrangeScene(size: CGSize(width: 750, height: 540))
+                
+                orangeView.presentScene(orangeScene)
+                PlaygroundPage.current.liveView = orangeView
+            })
         }
     }
 }
-
-

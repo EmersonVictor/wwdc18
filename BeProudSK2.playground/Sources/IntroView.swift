@@ -3,6 +3,8 @@ import PlaygroundSupport
 import SpriteKit
 
 public class IntroView: UIViewController {
+    var count = 0
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,14 +30,32 @@ public class IntroView: UIViewController {
         tryButton.layer.borderColor = UIColor.white.cgColor
         tryButton.addTarget(self, action: #selector(IntroView.started), for: UIControlEvents.touchUpInside)
         
-        UIView.animate(withDuration: 10, delay: 1, options:[UIViewAnimationOptions.repeat, UIViewAnimationOptions.autoreverse], animations: {
-            tryButton.layer.borderColor = rainbowColors.red.cgColor
-            tryButton.layer.borderColor = rainbowColors.orange.cgColor
-            tryButton.layer.borderColor = rainbowColors.yellow.cgColor
-            tryButton.layer.borderColor = rainbowColors.green.cgColor
-            tryButton.layer.borderColor = rainbowColors.blue.cgColor
-            tryButton.layer.borderColor = rainbowColors.purple.cgColor
-        }, completion: nil)
+        let _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (Timer) -> Void in
+            UIView.animate(withDuration: 0.5, animations: {
+                
+                switch self.count {
+                case 0:
+                    tryButton.layer.borderColor = rainbowColors.red.cgColor
+                case 1:
+                    tryButton.layer.borderColor = rainbowColors.orange.cgColor
+                case 2:
+                    tryButton.layer.borderColor = rainbowColors.yellow.cgColor
+                case 3:
+                    tryButton.layer.borderColor = rainbowColors.green.cgColor
+                case 4:
+                    tryButton.layer.borderColor = rainbowColors.blue.cgColor
+                case 5:
+                    tryButton.layer.borderColor = rainbowColors.purple.cgColor
+                default:
+                    tryButton.layer.borderColor = UIColor.white.cgColor
+                }
+                
+                self.count += 1
+                if self.count > 5 {
+                    self.count = 0
+                }
+            })
+        }
         
         self.view.addSubview(tryButton)
     }
