@@ -8,8 +8,7 @@ public class Scene: SKScene {
     public override func didMove(to view: SKView) {
         self.createCircle()
     }
-    
-    func createCircle() {
+        func createCircle() {
         let circle = SKShapeNode(circleOfRadius: 0.5)
 //        circle.position = CGPoint(x: -10.0, y: 0.0)
         circle.fillColor = .black

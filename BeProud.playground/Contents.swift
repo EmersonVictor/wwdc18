@@ -2,9 +2,6 @@
 import UIKit
 import PlaygroundSupport
 
-// Font
-let cfURL = Bundle.main.url(forResource: "BarlowCondensed-Regular", withExtension: "ttf")! as CFURL
-CTFontManagerRegisterFontsForURL(cfURL, CTFontManagerScope.process, nil)
 
 
 public class RedView: UIViewController {
