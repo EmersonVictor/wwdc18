@@ -2,27 +2,51 @@ import PlaygroundSupport
 import SpriteKit
 
 
-public class RedScene: ObstaclesScene {
+public class GreenScene: ObstaclesScene {
     override public func didMove(to view: SKView) {
         // Setup physics world
         self.setupPhysicsWorld()
         
         // Setup scene
-        self.backgroundColor = grayColors.darker
+        self.backgroundColor = grayColors.soft
         self.scaleMode = .aspectFill
         
         // Start scene nodes
         self.setupPerson()
+        self.customPerson()
+        self.setupCircumference(withColor: rainbowColors.green, radiusOf: 45/2)
         self.setupObstacles()
-        self.setupAceptance(rainbowColors.red)
+        self.setupAceptance(rainbowColors.green)
+    }
+    
+    // Custom person
+    func customPerson() {
+        let colors = [
+            rainbowColors.red,
+            rainbowColors.orange,
+            rainbowColors.yellow,
+        ]
+        
+        let radius: [CGFloat] = [
+            90/2,
+            75/2,
+            60/2,
+        ]
+        
+        for (color, radius) in zip(colors, radius) {
+            let redCircum = SKShapeNode(circleOfRadius: radius)
+            redCircum.fillColor = UIColor.black
+            redCircum.lineWidth = 4
+            redCircum.strokeColor = color
+            redCircum.position = CGPoint(x: 0, y: 0)
+            
+            self.personNode.addChild(redCircum)
+        }
     }
     
     // Setup obstacles
     func setupObstacles() {
         let sizes = [
-            (w: 10, h: 240), // 1
-            (w: 250, h: 10), // 2
-            (w: 10, h: 240), // 3
             (w: 500, h: 10), // 4
             (w: 10, h: 445), // 5
             (w: 110, h: 10), // 6
@@ -30,9 +54,6 @@ public class RedScene: ObstaclesScene {
         ]
         
         let positions = [
-            CGPoint(x: 140, y: 300), // 1
-            CGPoint(x: 0, y: 200),   // 2
-            CGPoint(x: 250, y: 200), // 3
             CGPoint(x: 125, y: 95),  // 4
             CGPoint(x: 440, y: 95),  // 5
             CGPoint(x: 640, y: 250), // 6
@@ -66,14 +87,18 @@ public class RedScene: ObstaclesScene {
         if contact.bodyA.categoryBitMask == PhysicsCategory.Acceptance ||
             contact.bodyB.categoryBitMask == PhysicsCategory.Acceptance {
             
+            // Actions
             let acceptYourself = SKAction.fadeOut(withDuration: 0.5)
+            let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+            
+            self.acceptanceCircumference.run(fadeIn)
             self.acceptanceNode.run(acceptYourself, completion: {() -> Void in
                 // Next view
-                let orangeView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
-                let orangeScene = OrangeScene(size: CGSize(width: 750, height: 540))
+                let blueView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
+                let blueScene = BlueScene(size: CGSize(width: 750, height: 540))
                 
-                orangeView.presentScene(orangeScene)
-                PlaygroundPage.current.liveView = orangeView
+                blueView.presentScene(blueScene)
+                PlaygroundPage.current.liveView = blueView
             })
         }
     }

@@ -4,6 +4,7 @@ import SpriteKit
 public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
     var personNode = SKShapeNode(circleOfRadius: 45)
     var acceptanceNode = SKShapeNode(rectOf: CGSize(width: 20, height: 20), cornerRadius: 3)
+    var acceptanceCircumference = SKShapeNode(circleOfRadius: 0)
     
     // Setup physics world
     func setupPhysicsWorld() {
@@ -36,7 +37,21 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(person)
     }
     
-    // Setup "acceptance"
+    // Setup acceptance circumference
+    func setupCircumference(withColor color: UIColor, radiusOf radius: CGFloat) {
+        self.acceptanceCircumference = SKShapeNode(circleOfRadius: radius)
+        
+        let circum = self.acceptanceCircumference
+        circum.position = CGPoint(x: 0, y: 0)
+        circum.fillColor = UIColor.black
+        circum.lineWidth = 4
+        circum.strokeColor = color
+        circum.alpha = 0
+        
+        self.personNode.addChild(circum)
+    }
+    
+    // Setup acceptance
     func setupAceptance(_ color: UIColor) {
         let acceptance = self.acceptanceNode
         acceptance.position = CGPoint(x: 698, y: 305)

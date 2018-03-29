@@ -14,6 +14,7 @@ public class PurpleScene: ObstaclesScene {
         // Start scene nodes
         self.setupPerson()
         self.customPerson()
+        self.setupCircumference(withColor: rainbowColors.purple, radiusOf: 15/2)
         self.setupAceptance(rainbowColors.purple)
     }
     
@@ -52,8 +53,14 @@ public class PurpleScene: ObstaclesScene {
         if contact.bodyA.categoryBitMask == PhysicsCategory.Acceptance ||
             contact.bodyB.categoryBitMask == PhysicsCategory.Acceptance {
             
-            let acceptYourself = SKAction.fadeOut(withDuration: 1)
-            self.acceptanceNode.run(acceptYourself)
+            // Actions
+            let acceptYourself = SKAction.fadeOut(withDuration: 0.5)
+            let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+            
+            self.acceptanceCircumference.run(fadeIn)
+            self.acceptanceNode.run(acceptYourself, completion: {() -> Void in
+                // Next view
+            })
             
         }
     }
