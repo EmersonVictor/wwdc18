@@ -24,7 +24,6 @@ public let rainbowColors = RainbowColors()
 
 // Physics category
 public struct PhysicsCategory {
-    static let None: UInt32 = 0
     static let Person: UInt32 = 0b1       // Person
     static let Obstacles: UInt32 = 0b10   // Obstacles
     static let Acceptance: UInt32 = 0b101 // Acceptance

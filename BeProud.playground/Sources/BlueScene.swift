@@ -14,7 +14,7 @@ public class BlueScene: ObstaclesScene {
         // Start scene nodes
         self.setupPerson()
         self.customPerson()
-        self.setupCircumference(withColor: rainbowColors.blue, radiusOf: 30/2)
+        self.setupCircumference(withColor: rainbowColors.blue, radiusOf: 12)
         self.setupObstacles()
         self.setupAceptance(rainbowColors.blue)
     }
@@ -29,16 +29,16 @@ public class BlueScene: ObstaclesScene {
         ]
         
         let radius: [CGFloat] = [
-            90/2,
-            75/2,
-            60/2,
-            45/2,
+            36,
+            30,
+            24,
+            18,
         ]
         
         for (color, radius) in zip(colors, radius) {
             let redCircum = SKShapeNode(circleOfRadius: radius)
             redCircum.fillColor = UIColor.black
-            redCircum.lineWidth = 4
+            redCircum.lineWidth = 6
             redCircum.strokeColor = color
             redCircum.position = CGPoint(x: 0, y: 0)
             
@@ -54,8 +54,8 @@ public class BlueScene: ObstaclesScene {
         ]
         
         let positions = [
-            CGPoint(x: 640, y: 250), // 6
-            CGPoint(x: 640, y: 250), // 7
+            CGPoint(x: 640, y: 200), // 6
+            CGPoint(x: 640, y: 200), // 7
         ]
         
         var obstacles: SKShapeNode
@@ -86,17 +86,16 @@ public class BlueScene: ObstaclesScene {
             contact.bodyB.categoryBitMask == PhysicsCategory.Acceptance {
             
             // Actions
-            let acceptYourself = SKAction.fadeOut(withDuration: 0.5)
-            let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+            let acceptYourself = SKAction.fadeOut(withDuration: 0.7)
+            let fadeIn = SKAction.fadeIn(withDuration: 0.7)
             
             self.acceptanceCircumference.run(fadeIn)
             self.acceptanceNode.run(acceptYourself, completion: {() -> Void in
                 // Next view
-                let purpleView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
-                let purpleScene = PurpleScene(size: CGSize(width: 750, height: 540))
+                let purpleScene = PurpleScene(size: CGSize(width: 750, height: 446))
+                let moveInTransition = SKTransition.moveIn(with: SKTransitionDirection.right, duration: 1)
                 
-                purpleView.presentScene(purpleScene)
-                PlaygroundPage.current.liveView = purpleView
+                self.view?.presentScene(purpleScene, transition: moveInTransition)
             })
         }
     }

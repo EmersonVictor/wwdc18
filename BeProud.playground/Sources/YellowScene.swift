@@ -14,7 +14,7 @@ public class YellowScene: ObstaclesScene {
         // Start scene nodes
         self.setupPerson()
         self.customPerson()
-        self.setupCircumference(withColor: rainbowColors.yellow, radiusOf: 60/2)
+        self.setupCircumference(withColor: rainbowColors.yellow, radiusOf: 24)
         self.setupObstacles()
         self.setupAceptance(rainbowColors.yellow)
     }
@@ -27,14 +27,14 @@ public class YellowScene: ObstaclesScene {
         ]
         
         let radius: [CGFloat] = [
-            90/2,
-            75/2
+            36,
+            30
         ]
         
         for (color, radius) in zip(colors, radius) {
             let redCircum = SKShapeNode(circleOfRadius: radius)
             redCircum.fillColor = UIColor.black
-            redCircum.lineWidth = 4
+            redCircum.lineWidth = 6
             redCircum.strokeColor = color
             redCircum.position = CGPoint(x: 0, y: 0)
             
@@ -45,7 +45,7 @@ public class YellowScene: ObstaclesScene {
     // Setup obstacles
     func setupObstacles() {
         let sizes = [
-            (w: 250, h: 10), // 2
+            (w: 300, h: 10), // 2
             (w: 500, h: 10), // 4
             (w: 10, h: 445), // 5
             (w: 110, h: 10), // 6
@@ -53,11 +53,11 @@ public class YellowScene: ObstaclesScene {
         ]
         
         let positions = [
-            CGPoint(x: 0, y: 200),   // 2
-            CGPoint(x: 125, y: 95),  // 4
-            CGPoint(x: 440, y: 95),  // 5
-            CGPoint(x: 640, y: 250), // 6
-            CGPoint(x: 640, y: 250), // 7
+            CGPoint(x: 0, y: 190),   // 2
+            CGPoint(x: 125, y: 90),  // 4
+            CGPoint(x: 440, y: 90),  // 5
+            CGPoint(x: 640, y: 200), // 6
+            CGPoint(x: 640, y: 200), // 7
         ]
         
         var obstacles: SKShapeNode
@@ -88,17 +88,16 @@ public class YellowScene: ObstaclesScene {
             contact.bodyB.categoryBitMask == PhysicsCategory.Acceptance {
             
             // Actions
-            let acceptYourself = SKAction.fadeOut(withDuration: 0.5)
-            let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+            let acceptYourself = SKAction.fadeOut(withDuration: 0.7)
+            let fadeIn = SKAction.fadeIn(withDuration: 0.7)
             
             self.acceptanceCircumference.run(fadeIn)
             self.acceptanceNode.run(acceptYourself, completion: {() -> Void in
                 // Next view
-                let greenView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
-                let greenScene = GreenScene(size: CGSize(width: 750, height: 540))
+                let greenScene = GreenScene(size: CGSize(width: 750, height: 446))
+                let moveInTransition = SKTransition.moveIn(with: SKTransitionDirection.right, duration: 1)
                 
-                greenView.presentScene(greenScene)
-                PlaygroundPage.current.liveView = greenView
+                self.view?.presentScene(greenScene, transition: moveInTransition)
             })
             
         }

@@ -1,9 +1,8 @@
 import SpriteKit
 
-
 public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
-    var personNode = SKShapeNode(circleOfRadius: 45)
-    var acceptanceNode = SKShapeNode(rectOf: CGSize(width: 20, height: 20), cornerRadius: 3)
+    var personNode = SKShapeNode(circleOfRadius: 36)
+    var acceptanceNode = SKShapeNode(rectOf: CGSize(width: 17, height: 17), cornerRadius: 3)
     var acceptanceCircumference = SKShapeNode(circleOfRadius: 0)
     
     // Setup physics world
@@ -16,7 +15,7 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
     // Setup person node
     func setupPerson() {
         let person = self.personNode
-        let body = SKPhysicsBody(circleOfRadius: 45)
+        let body = SKPhysicsBody(circleOfRadius: 37)
         
         person.isAntialiased = false
         person.lineWidth = 0
@@ -44,7 +43,7 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
         let circum = self.acceptanceCircumference
         circum.position = CGPoint(x: 0, y: 0)
         circum.fillColor = UIColor.black
-        circum.lineWidth = 4
+        circum.lineWidth = 6
         circum.strokeColor = color
         circum.alpha = 0
         
@@ -54,10 +53,20 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
     // Setup acceptance
     func setupAceptance(_ color: UIColor) {
         let acceptance = self.acceptanceNode
-        acceptance.position = CGPoint(x: 698, y: 305)
+        acceptance.position = CGPoint(x: 698, y: 260)
         acceptance.fillColor = color
         acceptance.lineWidth = 0
         acceptance.zRotation = 40
+        
+        // Animation
+        let moveUp = SKAction.moveTo(y: 263, duration: 1)
+        let moveDown = SKAction.moveTo(y: 257, duration: 1)
+        let sequence = SKAction.sequence([moveUp, moveDown])
+        let rotate = SKAction.rotate(byAngle: 10, duration: 15)
+        
+        
+        acceptance.run(SKAction.repeatForever(sequence))
+        acceptance.run(SKAction.repeatForever(rotate))
         
         acceptance.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 20, height: 20))
         acceptance.physicsBody?.affectedByGravity = false
@@ -68,6 +77,7 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
         acceptance.physicsBody?.contactTestBitMask = PhysicsCategory.Person
         acceptance.physicsBody?.collisionBitMask = PhysicsCategory.Person
         acceptance.physicsBody?.mass = 999
+        
         
         self.addChild(acceptance)
     }
@@ -90,17 +100,17 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
     
     // Move "person"
     func move(to pos: CGPoint) {
-        if pos.x < 250 {
-            let moveAction = SKAction.moveTo(x: 0, duration: 3)
+        if pos.x < 200 {
+            let moveAction = SKAction.moveTo(x: 0, duration: 2.5)
             self.personNode.run(moveAction, withKey: "moving")
-        } else if pos.x > 500 {
-            let moveAction = SKAction.moveTo(x: 750, duration: 3)
+        } else if pos.x > 550 {
+            let moveAction = SKAction.moveTo(x: 750, duration: 2.5)
             self.personNode.run(moveAction, withKey: "moving")
-        } else if pos.y >= 270 {
-            let moveAction = SKAction.moveTo(y: 500, duration: 3)
+        } else if pos.y >= 223 {
+            let moveAction = SKAction.moveTo(y: 446, duration: 2.5)
             self.personNode.run(moveAction, withKey: "moving")
-        } else if pos.y < 250 {
-            let moveAction = SKAction.moveTo(y: 0, duration: 3)
+        } else if pos.y < 223 {
+            let moveAction = SKAction.moveTo(y: 0, duration: 2.5)
             self.personNode.run(moveAction, withKey: "moving")
         }
     }

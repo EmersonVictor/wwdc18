@@ -101,10 +101,11 @@ public class IntroView: UIViewController {
     
     @objc func started() {
         let redView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
-        let redScene = RedScene(size: CGSize(width: 750, height: 540))
+        let redScene = InstructionScene(size: CGSize(width: 750, height: 540))
         
-        redView.presentScene(redScene)
+        let transition = SKTransition.moveIn(with: SKTransitionDirection.down, duration: 5)
         PlaygroundPage.current.liveView = redView
+        redView.presentScene(redScene, transition: transition)
     }
 }
 
@@ -147,10 +148,14 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
     // Setup "acceptance"
     func setupAceptance(_ color: UIColor) {
         let acceptance = self.acceptanceNode
-        acceptance.position = CGPoint(x: 698, y: 305)
+        acceptance.position = CGPoint(x: 698, y: 27)
         acceptance.fillColor = color
         acceptance.lineWidth = 0
         acceptance.zRotation = 40
+        
+        let rotate = SKAction.rotate(byAngle: 10, duration: 20)
+
+        acceptance.run(SKAction.repeatForever(rotate))
         
         acceptance.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 20, height: 20))
         acceptance.physicsBody?.affectedByGravity = false
@@ -277,8 +282,27 @@ public class RedScene: ObstaclesScene {
             
             self.personNode.addChild(redCircum)
             
-            redCircum.run(SKAction.fadeIn(withDuration: 0.5))
+            let redScene = RedScene()
+            
+            redCircum.run(SKAction.fadeIn(withDuration: 0.5), completion: {
+                self.view?.presentScene(redScene, transition: SKTransition.moveIn(with: SKTransitionDirection.down, duration: 1))
+            })
         }
+    }
+}
+
+public class InstructionScene: SKScene {
+    override public func didMove(to view: SKView) {
+        self.createAreas()
+    }
+    
+    // Create touch areas
+    func createAreas() {
+        let largeLine = SKShapeNode(rectOf: CGSize(width: 6, height: 540))
+        let smallLine = SKShapeNode(rectOf: CGSize(width: 350, height: 6))
+        
+        let largeDashedLine1 = CGPath
+        
     }
 }
 

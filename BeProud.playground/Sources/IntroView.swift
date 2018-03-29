@@ -61,10 +61,10 @@ public class IntroView: UIViewController {
     }
     
     @objc func started() {
-        let redView = SKView(frame: CGRect(x:0 , y:0, width: 750, height: 540))
-        let redScene = RedScene(size: CGSize(width: 750, height: 540))
+        let obstaclesView = SKView(frame: CGRect(x: 0 , y: 0, width: 750, height: 446))
+        let redScene = RedScene(size: CGSize(width: 750, height: 446))
         
-        redView.presentScene(redScene)
-        PlaygroundPage.current.liveView = redView
+        obstaclesView.presentScene(redScene)
+        PlaygroundPage.current.liveView = obstaclesView
     }
 }
