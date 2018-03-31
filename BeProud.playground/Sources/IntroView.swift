@@ -7,6 +7,7 @@ public class IntroView: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+//        self.view.
         
         self.setupTryButton()
         self.addLogo()
@@ -16,13 +17,13 @@ public class IntroView: UIViewController {
         let logo = UIImage(named: "BeProudLogo")
         let logoView = UIImageView(image: logo)
         logoView.frame.origin.x = self.view.frame.size.width/2 - (logo?.size.width)!/2
-        logoView.frame.origin.y = 130
+        logoView.frame.origin.y = 100
         
         self.view.addSubview(logoView)
     }
     
     func setupTryButton() {
-        let tryButton = UIButton(frame: CGRect(x: self.view.frame.size.width/2 - 95, y: 330, width: 190, height: 65))
+        let tryButton = UIButton(frame: CGRect(x: self.view.frame.size.width/2 - 95, y: 290, width: 190, height: 65))
         tryButton.setTitle("TRY!", for: UIControlState.normal)
         tryButton.titleLabel?.textColor = UIColor.white
         tryButton.titleLabel?.font = UIFont(name: "BarlowCondensed-Regular", size:  33)
@@ -62,7 +63,7 @@ public class IntroView: UIViewController {
     
     @objc func started() {
         let obstaclesView = SKView(frame: CGRect(x: 0 , y: 0, width: 750, height: 446))
-        let instructionScene = InstructionScene(size: CGSize(width: 750, height: 446))
+        let instructionScene = RedScene(size: CGSize(width: 750, height: 446))
         
         obstaclesView.presentScene(instructionScene)
         PlaygroundPage.current.liveView = obstaclesView

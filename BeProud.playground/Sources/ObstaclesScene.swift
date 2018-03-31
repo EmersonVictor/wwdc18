@@ -4,6 +4,7 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
     var personNode = SKShapeNode(circleOfRadius: 36)
     var acceptanceNode = SKShapeNode(rectOf: CGSize(width: 17, height: 17), cornerRadius: 3)
     var acceptanceCircumference = SKShapeNode(circleOfRadius: 0)
+    var lastMovement = ""
     
     // Setup physics world
     func setupPhysicsWorld() {
@@ -28,7 +29,7 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
         person.physicsBody?.mass = 9999
         person.physicsBody?.restitution = 20
         person.physicsBody?.categoryBitMask = PhysicsCategory.Person
-        person.physicsBody?.contactTestBitMask = PhysicsCategory.Acceptance
+        person.physicsBody?.contactTestBitMask = PhysicsCategory.Obstacles
         person.physicsBody?.collisionBitMask = PhysicsCategory.Obstacles
         person.physicsBody?.friction = 0
         
@@ -103,15 +104,19 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
         if pos.x < 200 {
             let moveAction = SKAction.moveTo(x: 0, duration: 1.7)
             self.personNode.run(moveAction, withKey: "moving")
+            self.lastMovement = "left"
         } else if pos.x > 550 {
             let moveAction = SKAction.moveTo(x: 750, duration: 1.7)
             self.personNode.run(moveAction, withKey: "moving")
+            self.lastMovement = "right"
         } else if pos.y >= 223 {
             let moveAction = SKAction.moveTo(y: 446, duration: 1.7)
             self.personNode.run(moveAction, withKey: "moving")
+            self.lastMovement = "top"
         } else if pos.y < 223 {
             let moveAction = SKAction.moveTo(y: 0, duration: 1.7)
             self.personNode.run(moveAction, withKey: "moving")
+            self.lastMovement = "bottom"
         }
     }
 }

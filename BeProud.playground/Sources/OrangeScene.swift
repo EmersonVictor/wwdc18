@@ -88,6 +88,24 @@ public class OrangeScene: ObstaclesScene {
                 
                 self.view?.presentScene(yellowScene, transition: moveInTransition)
             })
+        } else {
+            let person = self.personNode
+            switch self.lastMovement {
+            case "left":
+                let moveAction = SKAction.moveTo(x: person.position.x + 10, duration: 0.1)
+                self.personNode.run(moveAction)
+            case "right":
+                let moveAction = SKAction.moveTo(x: person.position.x - 10, duration: 0.1)
+                self.personNode.run(moveAction)
+            case "top":
+                let moveAction = SKAction.moveTo(y: person.position.y - 10, duration: 0.1)
+                self.personNode.run(moveAction)
+            case "bottom":
+                let moveAction = SKAction.moveTo(y: person.position.y + 10, duration: 0.1)
+                self.personNode.run(moveAction)
+            default:
+                break
+            }
         }
     }
 }
