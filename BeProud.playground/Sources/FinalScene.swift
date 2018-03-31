@@ -2,6 +2,8 @@ import PlaygroundSupport
 import SpriteKit
 
 public class FinalScene: SKScene {
+    let button = SKLabelNode(fontNamed: "BarlowCondensed-Regular")
+    
     override public func didMove(to view: SKView) {
         // Setup scene
         self.backgroundColor = UIColor.white
@@ -152,6 +154,7 @@ public class FinalScene: SKScene {
         text.position = CGPoint(x: 350, y: 280)
         text.setScale(0.2)
         text.alpha = 0
+        text.name = "Information"
         self.addChild(text)
         
         let fadeIn = SKAction.fadeIn(withDuration: 0.5)
@@ -165,6 +168,14 @@ public class FinalScene: SKScene {
             self.showFinalText()
         })
         
+        // Next button
+        self.button.text = "NEXT >"
+        self.button.fontSize = 20
+        self.button.fontColor = grayColors.normal
+        self.button.position = CGPoint(x: 650,y: 130)
+        self.button.name = "nextButton"
+        
+        self.addChild(button)
         
     }
     
@@ -220,5 +231,21 @@ public class FinalScene: SKScene {
             introView.preferredContentSize = CGSize(width: 750, height: 446)
             PlaygroundSupport.PlaygroundPage.current.liveView = introView
         })
+    }
+    
+    // User touches began
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            let nodes = self.nodes(at: t.location(in: self))
+            if nodes.contains(where: { $0.name == "nextButton" }) {
+                let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+                
+                let info = self.childNode(withName: "Information")
+                info!.run(fadeOut)
+                self.button.run(fadeOut)
+                
+                self.showFinalText()
+            }
+        }
     }
 }

@@ -23,7 +23,7 @@ public class RedScene: ObstaclesScene {
         let sizes = [
             (w: 10, h: 240), // 1
             (w: 300, h: 10), // 2
-            (w: 10, h: 180), // 3
+            (w: 10, h: 160), // 3
             (w: 500, h: 10), // 4
             (w: 10, h: 445), // 5
             (w: 110, h: 10), // 6

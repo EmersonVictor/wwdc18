@@ -183,7 +183,12 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
     
     // User touches began
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.move(to: t.location(in: self)) }
+        for t in touches {
+            let nodes = self.nodes(at: t.location(in: self))
+            if nodes.contains(where: { $0.name == "nextButton" }) {
+                
+            }
+        }
     }
     
     // Move "person"

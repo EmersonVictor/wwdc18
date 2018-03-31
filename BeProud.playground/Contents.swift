@@ -1,6 +1,6 @@
 
 /*:
- ![Be Proud](BeProudLogo.png)
+ ![Be Proud](BeProudBlackLogo.png)
  
  The purpose of this playground is to metaphorically bring about the self-acceptance of a person from the LGBTQ + community. The circle, in this context, represents a person and at each stage, it becomes happier (colored) and has fewer obstacles to overcome.
  
