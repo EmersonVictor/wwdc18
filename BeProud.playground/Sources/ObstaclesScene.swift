@@ -101,16 +101,16 @@ public class ObstaclesScene: SKScene, SKPhysicsContactDelegate {
     // Move "person"
     func move(to pos: CGPoint) {
         if pos.x < 200 {
-            let moveAction = SKAction.moveTo(x: 0, duration: 2.5)
+            let moveAction = SKAction.moveTo(x: 0, duration: 1.7)
             self.personNode.run(moveAction, withKey: "moving")
         } else if pos.x > 550 {
-            let moveAction = SKAction.moveTo(x: 750, duration: 2.5)
+            let moveAction = SKAction.moveTo(x: 750, duration: 1.7)
             self.personNode.run(moveAction, withKey: "moving")
         } else if pos.y >= 223 {
-            let moveAction = SKAction.moveTo(y: 446, duration: 2.5)
+            let moveAction = SKAction.moveTo(y: 446, duration: 1.7)
             self.personNode.run(moveAction, withKey: "moving")
         } else if pos.y < 223 {
-            let moveAction = SKAction.moveTo(y: 0, duration: 2.5)
+            let moveAction = SKAction.moveTo(y: 0, duration: 1.7)
             self.personNode.run(moveAction, withKey: "moving")
         }
     }

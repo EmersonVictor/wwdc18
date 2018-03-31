@@ -1,7 +1,6 @@
 import PlaygroundSupport
 import SpriteKit
 
-
 public class GreenScene: ObstaclesScene {
     override public func didMove(to view: SKView) {
         // Setup physics world

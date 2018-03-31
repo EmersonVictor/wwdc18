@@ -6,8 +6,7 @@ public class FinalScene: SKScene {
         // Setup scene
         self.backgroundColor = UIColor.white
         self.scaleMode = .aspectFill
-        
-       self.createScene()
+        self.createScene()
     }
     
     func createScene() {
@@ -48,7 +47,9 @@ public class FinalScene: SKScene {
         self.addChild(circle3)
         
         let moveAction = SKAction.moveTo(x: 120, duration: 2)
-        circle3.run(moveAction)
+        circle3.run(moveAction, completion: {() -> Void in
+            self.showQuestion()
+        })
     }
     
     func createColoredSquare() -> SKShapeNode {
@@ -117,5 +118,107 @@ public class FinalScene: SKScene {
         }
         
         return circle
+    }
+    
+    func showQuestion() {
+        // Label setup
+        let text = SKLabelNode(fontNamed: "BarlowCondensed-Regular")
+        text.position = CGPoint(x: 305, y: 226)
+        text.fontSize = 30
+        text.fontColor = grayColors.instruction
+        text.lineBreakMode = NSLineBreakMode.byWordWrapping
+        text.numberOfLines = 2
+        text.preferredMaxLayoutWidth = 550
+        text.alpha = 0
+        
+        self.addChild(text)
+        
+        // Actions for sequence
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        let wait = SKAction.wait(forDuration: 4)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        
+        // Actions
+        let fadeSequence = SKAction.sequence([fadeIn, wait, fadeOut])
+        
+        text.text = question
+        text.run(fadeSequence, completion: {() -> Void in
+            self.showInformation()
+        })
+    }
+    
+    func showInformation() {
+        let text = SKSpriteNode(imageNamed: "Information")
+        text.position = CGPoint(x: 350, y: 280)
+        text.setScale(0.2)
+        text.alpha = 0
+        self.addChild(text)
+        
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        let wait = SKAction.wait(forDuration: 40)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        
+        // Actions
+        let fadeSequence = SKAction.sequence([fadeIn, wait, fadeOut])
+        
+        text.run(fadeSequence, completion: {() -> Void in
+            self.showFinalText()
+        })
+        
+        
+    }
+    
+    func showFinalText() {
+        let text = SKSpriteNode(imageNamed: "FinalText")
+        text.position = CGPoint(x: 350, y: 280)
+        text.setScale(0.45)
+        text.alpha = 0
+        self.addChild(text)
+        
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        let wait = SKAction.wait(forDuration: 20)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        
+        // Actions
+        let fadeSequence = SKAction.sequence([fadeIn, wait, fadeOut])
+        
+        text.run(fadeSequence, completion: {() -> Void in
+            self.showBeProud()
+        })
+    }
+    
+    func showBeProud() {
+        let words = ["BE", "PROUD", "OF", "WHO", "YOU", "ARE"]
+        
+        let positions = [
+            CGPoint(x: 375, y: 400),
+            CGPoint(x: 375, y: 350),
+            CGPoint(x: 375, y: 300),
+            CGPoint(x: 375, y: 250),
+            CGPoint(x: 375, y: 200),
+            CGPoint(x: 375, y: 150)
+        ]
+        
+        let fadeIn = SKAction.fadeIn(withDuration: 0.6)
+        
+        for (word, position) in zip(words, positions) {
+            let text = SKLabelNode(fontNamed: "BarlowCondensed-Regular")
+            text.fontColor = grayColors.instruction
+            text.fontSize = 35
+            text.zPosition = 1
+            text.alpha = 0
+            
+            text.text = word
+            text.position = position
+            
+            self.addChild(text)
+            text.run(fadeIn)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(6), execute: {
+            let introView = IntroView()
+            introView.preferredContentSize = CGSize(width: 750, height: 446)
+            PlaygroundSupport.PlaygroundPage.current.liveView = introView
+        })
     }
 }

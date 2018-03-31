@@ -2,6 +2,7 @@ import UIKit
 
 // Colors
 public struct GrayColors {
+    let instruction = UIColor(red:0.11, green:0.11, blue:0.11, alpha:1.0)
     let darker = UIColor(red:0.20, green:0.20, blue:0.20, alpha:1.0)
     let dark = UIColor(red:0.32, green:0.32, blue:0.32, alpha:1.0)
     let normal = UIColor(red:0.44, green:0.44, blue:0.44, alpha:1.0)
@@ -28,3 +29,6 @@ public struct PhysicsCategory {
     static let Obstacles: UInt32 = 0b10   // Obstacles
     static let Acceptance: UInt32 = 0b101 // Acceptance
 }
+
+// Final texts
+public let question = "How important do you think it is to a member of LGBTQ+ accept themselves?"
